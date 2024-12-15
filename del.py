@@ -8,7 +8,7 @@ def remove_from_startupW():
         0, winreg.KEY_SET_VALUE)
         
         # Supprime l'entrée associée au fichier
-        winreg.DeleteValue(key, "Keylogger")  # Remplacez "Keylogger" par le nom utilisé dans le script original
+        winreg.DeleteValue(key, "KeyLogger")  # Remplacez "KeyLogger" par le nom utilisé dans le script original
         winreg.CloseKey(key)
         print("Entrée supprimée du démarrage.")
     except FileNotFoundError:
@@ -25,7 +25,7 @@ def remove_from_startupX():
         0, winreg.KEY_SET_VALUE)
         
         # Supprime l'entrée associée au fichier
-        winreg.DeleteValue(key, "Datalogger")  # Remplacez "Datalogger" par le nom utilisé dans le script original
+        winreg.DeleteValue(key, "DataLogger")  # Remplacez "Datalogger" par le nom utilisé dans le script original
         winreg.CloseKey(key)
         print("Entrée supprimée du démarrage.")
     except FileNotFoundError:
@@ -38,4 +38,4 @@ remove_from_startupW()
 remove_from_startupX()
 
 
-# Ou faire : Win + R > regedit > HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > Supprimer l'entrée "Keylogger" ou "Datalogger"
+# Ou faire : Win + R > regedit > HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > Supprimer l'entrée "KeyLogger" ou "DataLogger"
