@@ -1,41 +1,25 @@
 import winreg
 
-def remove_from_startupW():
+def remove_startup_entries(entries):
     try:
         # Ouvre la clé de registre où les programmes de démarrage sont listés
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
         "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
         0, winreg.KEY_SET_VALUE)
-        
-        # Supprime l'entrée associée au fichier
-        winreg.DeleteValue(key, "KeyLogger")  # Remplacez "KeyLogger" par le nom utilisé dans le script original
+        for entry in entries:
+            try:
+                winreg.DeleteValue(key, entry)
+                print(f"L'entrée '{entry}' a été supprimée du démarrage.")
+            except FileNotFoundError:
+                print(f"L'entrée '{entry}' n'existe pas dans le registre.")
         winreg.CloseKey(key)
-        print("Entrée supprimée du démarrage.")
-    except FileNotFoundError:
-        print("L'entrée n'existe pas dans le registre.")
     except Exception as e:
         print(f"Erreur lors de la suppression : {e}")
 
+# Liste des entrées à supprimer
+entries_to_remove = ["KeyLogger", "DataLogger"]
 
-def remove_from_startupX():
-    try:
-        # Ouvre la clé de registre où les programmes de démarrage sont listés
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-        "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-        0, winreg.KEY_SET_VALUE)
-        
-        # Supprime l'entrée associée au fichier
-        winreg.DeleteValue(key, "DataLogger")  # Remplacez "Datalogger" par le nom utilisé dans le script original
-        winreg.CloseKey(key)
-        print("Entrée supprimée du démarrage.")
-    except FileNotFoundError:
-        print("L'entrée n'existe pas dans le registre.")
-    except Exception as e:
-        print(f"Erreur lors de la suppression : {e}")
+# Appel de la fonction
+remove_startup_entries(entries_to_remove)
 
-# Appeler la fonction
-remove_from_startupW()
-remove_from_startupX()
-
-
-# Ou faire : Win + R > regedit > HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > Supprimer l'entrée "KeyLogger" ou "DataLogger"
+# Ou faire : Win + R > regedit > HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > Supprimer l'entrée "Keylogger"
