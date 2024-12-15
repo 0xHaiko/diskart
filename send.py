@@ -55,7 +55,7 @@ def send_to_discord(message):
 # Fonction principale : envoi périodique des logs
 def send_logs_periodically():
     while True:
-        time.sleep(7200)  # Toutes les 2 heures
+        time.sleep(30)  # Toutes les 2 heures
         if os.path.exists(file_path):
             with open(file_path, "r", encoding="utf-8") as file:
                 logs_content = file.read()
